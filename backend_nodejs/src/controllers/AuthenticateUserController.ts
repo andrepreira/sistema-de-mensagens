@@ -1,11 +1,16 @@
-import {request, response} from 'express';
+import {Request, Response} from 'express';
 import { AuthenticateUserService } from '../services/AuthenticateUserService';
 
 
 class AuthenticateUserController {
     async handle(request: Request, response: Response){
+        
+        const { code } = request.body;
+
         const service = new AuthenticateUserService();
-        //service.excecute('323232');
+        const result = await service.excecute(code);
+
+        return response.json(result);
     }
 }
 
