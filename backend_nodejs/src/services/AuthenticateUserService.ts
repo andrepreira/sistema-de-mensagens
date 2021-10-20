@@ -1,4 +1,6 @@
 import axios from "axios";
+import prismaClient from '../prisma';
+import { sign} from 'jsonwebtoken';
 
 /**
  * Receber o code (string)
@@ -40,9 +42,48 @@ class AuthenticateUserService {
             headers: {
                 authorization: `Bearer ${accessTokenResponse.access_token}`
             }
-        })
+        });
 
-        return response.data;
+        const { login, id, avatar_url, name } = response.data;
+
+        if (response.data.name === null) {
+            return response.statusText = 'Por favor, insira um nome ao seu perfil do github';
+        }
+        
+
+        let user = await prismaClient.user.findFirst({
+            where:{
+                github_id: id
+            }
+        });
+
+        if (!user) {
+           user = await prismaClient.user.create({
+                data: {
+                    github_id: id,
+                    login,
+                    avatar_url,
+                    name
+                }
+            });
+        }
+
+        const token = sign(
+            {
+                user: {
+                    name: user.name,
+                    avatar_url: user.avatar_url,
+                    id: user.id
+                }
+            },
+            process.env.JWT_SECRET,
+            {
+                subject: user.id,
+                expiresIn: '1d'
+            }
+        )
+
+        return {token, user};
     }
 }
 
