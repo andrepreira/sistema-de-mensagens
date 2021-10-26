@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "docker_postgres_db_elixir",
+            "database": "api_nuvem_de_tags_elixir_dev",
+            "username": "postgres",
+            "password": "postgres"
+        }
+    ]
+}
