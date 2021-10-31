@@ -17,6 +17,18 @@ config :api_nuvem_de_tags_elixir, ApiNuvemDeTagsElixirWeb.Endpoint,
   pubsub_server: ApiNuvemDeTagsElixir.PubSub,
   live_view: [signing_salt: "GcDnAwfA"]
 
+config :api_nuvem_de_tags_elixir, ApiNuvemDeTagsElixir.Scheduler, jobs: [
+  # # Every minute
+
+    {"@minutely",      {ApiNuvemDeTagsElixir.Tags.Count, :call, []}},
+
+  # # Every midnight
+  # {"@midnight",      {ApiNuvemDeTagsElixir.Tags.Count, :call, []}},
+
+  # Every second
+    # {"@secondly",      {ApiNuvemDeTagsElixir.Tags.Count, :call, []}},
+]
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

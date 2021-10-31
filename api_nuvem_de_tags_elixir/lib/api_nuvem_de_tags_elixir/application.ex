@@ -15,9 +15,10 @@ defmodule ApiNuvemDeTagsElixir.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: ApiNuvemDeTagsElixir.PubSub},
       # Start the Endpoint (http/https)
-      ApiNuvemDeTagsElixirWeb.Endpoint
+      ApiNuvemDeTagsElixirWeb.Endpoint,
       # Start a worker by calling: ApiNuvemDeTagsElixir.Worker.start_link(arg)
       # {ApiNuvemDeTagsElixir.Worker, arg}
+      ApiNuvemDeTagsElixir.Scheduler
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
